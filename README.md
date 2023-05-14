@@ -24,6 +24,17 @@ https://trello.com/b/QP47VdZT/contactapp-kanban
 8. Admin capabilities to change the status of a contact message
 9. REST endpoint for submitting Contact form entries
 
+## Application Pages
+
+The application includes the following pages which can be accessed via the corresponding URL paths:
+
+1. **Contact Form Page**: You can access the contact form at `/contact/`. This page contains a form where users can submit their details and messages.
+
+2. **Login Page**: The login page is available at `/login/`. Existing users can use this page to login to the application.
+
+3. **Registration Page**: New users can register for an account on the registration page at `/registration/`.
+
+
 ## Technical Requirements
 
 - Django framework, min version: 4.1.5
