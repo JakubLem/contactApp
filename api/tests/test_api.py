@@ -77,7 +77,7 @@ class TestAPI:
 
         c = Client()
         c.login(username=non_admin_user.username, password='password')
-        
+
         # Test creating a contact with status set by user
         response = c.post("/api/contacts/", {
             "name": "Test Name",
@@ -86,7 +86,7 @@ class TestAPI:
             "message": "This is a test message.",
             "status": "PRG",
         })
-        
+
         assert response.status_code == 400
         assert response.json() == {
             'status': ['You are not allowed to set this field.']
