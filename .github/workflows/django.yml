@@ -1,0 +1,25 @@
+name: Docker Django CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build Docker Compose
+      run: docker-compose build
+
+    - name: Run Tests
+      run: docker-compose run web pytest -x -vv
+
+    - name: Run Pylama
+      run: docker-compose run web pylama .
