@@ -1,11 +1,12 @@
 import pytest
 from api.models import Contact
 
+
 @pytest.mark.django_db
 class TestAPI:
     def test_create_contact(self, client):
         c = client()
-        
+
         # Test creating a new contact
         response = c.post("/api/contacts/", {
             "name": "Test Name",
@@ -39,12 +40,12 @@ class TestAPI:
 
     def test_negative_create_contact_without_required_fields(self, client):
         c = client()
-        
+
         # Test creating a contact without required fields
         response = c.post("/api/contacts/", {})
         assert response.status_code == 400
         assert response.json() == {
-            'email': ['This field is required.'], 
+            'email': ['This field is required.'],
             'message': ['This field is required.'],
             'name': ['This field is required.'],
             'subject': ['This field is required.']
