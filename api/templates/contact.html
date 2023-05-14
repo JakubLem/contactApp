@@ -5,34 +5,66 @@
     <style>
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
         }
+    
+        header {
+            background-color: #0C4B33;
+            color: white;
+            padding: 10px;
+            width: 100%;
+        }
+    
+        header nav ul {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+    
+        header nav ul li {
+            margin-left: 10px;
+        }
+    
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+    
         .contact-form {
             width: 50%;
             background-color: white;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+            margin-top: 20px;
         }
+    
         .contact-form h1 {
             text-align: center;
         }
+    
         .contact-form textarea {
             width: 100%;
             min-height: 200px;
         }
+    
         .contact-form input,
         .contact-form select {
             width: 100%;
             margin-bottom: 15px;
         }
+    
         .contact-form label {
             margin-top: 15px;
         }
+    
         .contact-form input[type="submit"] {
             background-color: #0C4B33;
             color: white;
@@ -41,12 +73,23 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+    
         .contact-form input[type="submit"]:hover {
             background-color: #093624;
         }
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/contact">Contact</a></li>
+                <li><a id="login-link" href="/login">Sign In</a></li>
+                <li><a id="signup-link" href="/registration">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="contact-form">
         <h1>Contact Us</h1>
         <form id="contact-form" method="post">
@@ -65,12 +108,19 @@
             <textarea id="message" name="message"></textarea><br>
             <input type="submit" value="Submit">
         </form>
+        <ul id="error-list"></ul>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $('#contact-form').submit(function(e) {
             e.preventDefault();
+            var selectedOption = $('#subject option:selected');
+            var selectedText = selectedOption.text();
+            var selectedValue = getSubjectValue(selectedText);
+
+            selectedOption.val(selectedValue);
+    
             $.ajax({
                 url: '/api/contacts/',
                 type: 'post',
@@ -79,10 +129,35 @@
                     alert('Form submitted successfully.');
                 },
                 error: function(xhr, errmsg, err) {
-                    alert(JSON.parse(xhr.responseText));
+                    selectedOption.val(selectedText);
+    
+                    var errors = JSON.parse(xhr.responseText);
+                    var errorList = $('#error-list');
+                    errorList.empty();
+                    for (var key in errors) {
+                        if (errors.hasOwnProperty(key)) {
+                            var errorItem = '<li>' + key + ': ' + errors[key] + '</li>';
+                            errorList.append(errorItem);
+                        }
+                    }
                 }
             });
         });
+
+        function getSubjectValue(subjectText) {
+            switch (subjectText) {
+                case 'App Support':
+                    return 'APP';
+                case 'Payment Support':
+                    return 'PAY';
+                case 'HR/Jobs':
+                    return 'HR';
+                case 'Other':
+                    return 'OTH';
+                default:
+                    return '';
+            }
+        }
     </script>
 </body>
 </html>
