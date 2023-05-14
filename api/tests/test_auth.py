@@ -2,6 +2,7 @@ import pytest
 from rest_framework.test import APIClient as Client
 from django.contrib.auth.models import User
 
+
 @pytest.mark.django_db
 class TestUserRegistrationAndLogin:
     register_url = "/api/auth/registration/"
