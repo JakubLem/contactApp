@@ -84,12 +84,8 @@
         <nav>
             <ul>
                 <li><a href="/contact">Contact</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="/logout">Logout</a></li>
-                {% else %}
-                    <li><a href="/login">Sign In</a></li>
-                    <li><a href="/registration">Sign Up</a></li>
-                {% endif %}
+                <li><a id="login-link" href="/login">Sign In</a></li>
+                <li><a id="signup-link" href="/registration">Sign Up</a></li>
             </ul>
         </nav>
     </header>

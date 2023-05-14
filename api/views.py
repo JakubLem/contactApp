@@ -33,6 +33,7 @@ class UserRegistrationView(generic.CreateView):
 
 
 class ContactViewSet(viewsets.ModelViewSet):
+    http_method_names = ["post"]
     queryset = models.Contact.objects.all()
     serializer_class = serializers.ContactSerializer
 

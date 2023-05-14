@@ -72,12 +72,8 @@
         <nav>
             <ul>
                 <li><a href="/contact">Contact</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="/logout">Logout</a></li>
-                {% else %}
-                    <li><a href="/login">Sign In</a></li>
-                    <li><a href="/registration">Sign Up</a></li>
-                {% endif %}
+                <li><a id="login-link" href="/login">Sign In</a></li>
+                <li><a id="signup-link" href="/registration">Sign Up</a></li>
             </ul>
         </nav>
     </header>
@@ -85,6 +81,7 @@
     <div class="form-container">
         <h1>Login</h1>
         <form id="login-form" method="post">
+            <input type="hidden" name="next" value="/contact">
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username"><br>
             <label for="password">Password:</label><br>
@@ -101,9 +98,10 @@
                 url: '/api/auth/login/',
                 type: 'post',
                 data: $('#login-form').serialize(),
-                success: function() {
+                success: function(response) {
                     alert('Logged in successfully.');
-                    window.location.href = "/";  // redirect to home page
+                    document.cookie = "authToken=" + response.token;
+                    window.location.href = "/contact";
                 },
                 error: function(xhr, errmsg, err) {
                     alert(JSON.parse(xhr.responseText));

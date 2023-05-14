@@ -28,18 +28,6 @@ class TestAPI:
         }
         assert Contact.objects.count() == 1
 
-        # Test retrieving the created contact
-        response = c.get(f"/api/contacts/{response.json()['id']}/")
-        assert response.status_code == 200
-        assert response.json() == {
-            "id": 1,
-            "name": "Test Name",
-            "email": "test@example.com",
-            "subject": "APP",
-            "message": "This is a test message.",
-            "status": "NEW",
-        }
-
     def test_negative_create_contact_without_required_fields(self):
         c = Client()
 
@@ -96,3 +84,8 @@ class TestAPI:
         c = Client()
         response = c.get("/contact/")
         assert response.status_code == 200
+
+    def test_put_contact(self):
+        c = Client()
+        response = c.put("/api/contacts/test/")
+        assert response.status_code == 405
