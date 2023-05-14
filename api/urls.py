@@ -9,4 +9,5 @@ router.register("contacts", api_views.ContactViewSet, basename="contact")
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('contact/', api_views.contact, name='contact'),
 ]

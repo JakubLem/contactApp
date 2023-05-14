@@ -91,3 +91,8 @@ class TestAPI:
         assert response.json() == {
             'status': ['You are not allowed to set this field.']
         }
+
+    def test_get_contacts(self):
+        c = Client()
+        response = c.get("/contact/")
+        assert response.status_code == 200

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Form</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .contact-form {
+            width: 50%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+        }
+        .contact-form h1 {
+            text-align: center;
+        }
+        .contact-form textarea {
+            width: 100%;
+            min-height: 200px;
+        }
+        .contact-form input,
+        .contact-form select {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .contact-form label {
+            margin-top: 15px;
+        }
+        .contact-form input[type="submit"] {
+            background-color: #0C4B33;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .contact-form input[type="submit"]:hover {
+            background-color: #093624;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-form">
+        <h1>Contact Us</h1>
+        <form id="contact-form" method="post">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="subject">Subject:</label><br>
+            <select id="subject" name="subject">
+                <option value="App Support">App Support</option>
+                <option value="Payment Support">Payment Support</option>
+                <option value="HR/Jobs">HR/Jobs</option>
+                <option value="Other">Other</option>
+            </select><br>
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message"></textarea><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#contact-form').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/api/contacts/',
+                type: 'post',
+                data: $('#contact-form').serialize(),
+                success: function() {
+                    alert('Form submitted successfully.');
+                },
+                error: function(xhr, errmsg, err) {
+                    alert(JSON.parse(xhr.responseText));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
