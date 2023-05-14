@@ -2,6 +2,10 @@
 
 This is a Django application that implements a contact form. Users can submit messages through the HTML form or REST API.
 
+## Trello Board:
+
+https://trello.com/b/QP47VdZT/contactapp-kanban
+
 ## Application Features
 
 1. Contact Form with the following fields:
