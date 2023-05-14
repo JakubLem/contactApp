@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #0C4B33;
+            color: white;
+            padding: 10px;
+            width: 100%;
+        }
+    
+        header nav ul {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+    
+        header nav ul li {
+            margin-left: 10px;
+        }
+    
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-container {
+            width: 40%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+        }
+        .form-container h1 {
+            text-align: center;
+        }
+        .form-container input {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .form-container label {
+            margin-top: 15px;
+        }
+        .form-container input[type="submit"] {
+            background-color: #0C4B33;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #093624;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/contact">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/logout">Logout</a></li>
+                {% else %}
+                    <li><a href="/login">Sign In</a></li>
+                    <li><a href="/registration">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <h1>Registration</h1>
+        <form id="registration-form" method="post">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#registration-form').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/api/auth/registration/',
+                type: 'post',
+                data: $('#registration-form').serialize(),
+                success: function() {
+                    alert('Registered successfully.');
+                    window.location.href = "/login/";  // redirect to login page
+                },
+                error: function(xhr, errmsg, err) {
+                    alert(JSON.parse(xhr.responseText));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
