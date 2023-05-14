@@ -23,6 +23,7 @@ class TestAPI:
             "message": "This is a test message.",
             "status": "NEW",
         }
+        assert Contact.objects.count() == 1
 
         # Test retrieving the created contact
         response = c.get(f"/api/contacts/{response.json()['id']}/")
@@ -48,6 +49,7 @@ class TestAPI:
             'name': ['This field is required.'],
             'subject': ['This field is required.']
         }
+        assert Contact.objects.count() == 0
 
     def test_negative_create_contact_with_invalid_email(self, client):
         c = client()
@@ -64,3 +66,4 @@ class TestAPI:
         assert response.json() == {
             'email': ['Enter a valid email address.']
         }
+        assert Contact.objects.count() == 0
